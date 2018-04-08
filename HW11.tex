@@ -1,0 +1,228 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{50.034 Probability and Statistics\\Week 11 Review Problems}
+
+\author{Joel Huang, 1002530}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Problem 1: Affine mappings from intervals}
+\begin{enumerate}
+\item $\dfrac{x+7}{4}+1$
+\item $\dfrac{5(x+1)}{13}-5$
+\item $\dfrac{7(x-3)}{2}+10$
+\item $\dfrac{x-2}{2}+2$
+\end{enumerate}
+
+\section{Problem 2: Uniform distribution}
+Let the set of data points $x_1, \cdots, x_n$ be $A$.
+\begin{enumerate}
+\item For this uniform probability model, $f(x|c) = \dfrac{1}{c-1}$ for $ 1\leq x \leq c $ and $0$ elsewhere. The model is therefore defined for $ c > 1 $.
+\item The data $x_1, \cdots, x_n$ has values $x_i > 1$. Intuitively, $c$ has to take the value of the largest $x_i$, in order to maximize the likelihood function. This is akin to fitting the uniform probability model from values $1$ to $max(A)$, which gives us the maximum likelihood of the dataset.
+\end{enumerate}
+
+\section{Problem 3: Inverse Gaussian distribution}
+For i.i.d. data, $x_1,\cdots,x_n$,
+\begin{equation}
+L(x,u)=\prod_{i=1}^{n} f(x|u)
+\end{equation}
+Using the log likelihood, products are converted to sums:
+\begin{equation}
+\ln \prod_{i=1}^{n} f(x|u) = \sum_{i=1}^{n} \ln(f(x|u))
+\end{equation}
+Substituting in $f(x|u)$, we get
+\begin{equation}
+\frac{u}{\sqrt{2\pi}}\sum_{i=1}^{n} \left( \ln\left(x_i^{-\frac{3}{2}}\right) + \ln \left( e^{-\frac{(x_i-u)^2}{x_i}} \right) \right)
+\end{equation}
+Using $\log a^b = b\log a$, the expression simplifies to
+\begin{equation}
+\frac{u}{\sqrt{2\pi}}\sum_{i=1}^{n} \left( -\frac{3}{2}\ln(x_i) -\frac{(x_i-u)^2}{x_i} \right)
+\end{equation}
+Expanding the terms for easier differentiation:
+\begin{equation}
+-\frac{3u}{2\sqrt{2\pi}} \sum_{i=1}^{n} \ln(x_i) - \frac{u}{\sqrt{2\pi}} \sum_{i=1}^{n}x_i + \frac{2u^2}{\sqrt{2\pi}} - \frac{u^3}{\sqrt{2\pi}}\sum_{i=1}^{n}\frac{1}{x_i}
+\end{equation}
+Computing the partial derivative w.r.t. $u$ and equating to $0$,
+\begin{equation}
+\frac{\partial \log(L)}{\partial u} =
+-\frac{3}{2\sqrt{2\pi}} \sum_{i=1}^{n} \ln(x_i) - \frac{1}{\sqrt{2\pi}} \sum_{i=1}^{n}x_i + \frac{4u}{\sqrt{2\pi}} - \frac{3u^2}{\sqrt{2\pi}}\sum_{i=1}^{n}\frac{1}{x_i} = 0
+\end{equation}
+Now we have a quadratic equation in $u$ and can solve for $u_{MLE}$.
+
+
+\section{Problem 4: Expectations and Correlation Coefficients}
+\begin{enumerate}
+\item The normalizing constant $c$ can be found by equating the following triple integral to $1$:
+\begin{equation}
+\int_2^3\int_0^1\int_{\frac{1}{2}}^{\frac{3}{2}} c(x+4y+z^2+0.5) \mathop{dx} \mathop{dy} \mathop{dz} = 1
+\end{equation}
+Evaluating, $c\left(\dfrac{7}{2}+\dfrac{19}{3} \right)=1$. Solving for $c$ gives $c=\dfrac{6}{59} \approx 0.1016$.
+
+\item The marginal $f_x$ is the integral of the joint w.r.t. $y$ and $z$, which was previously calculated in the process of the triple integral,
+\begin{equation}
+f_x = c\left[xy+2y^2+\frac{41y}{6}\right]_0^1 = c\left(x+\frac{53}{6}\right)
+= \frac{6x}{59}+\frac{53}{59}
+\end{equation}
+The marginal $f_y$ is the integral of the joint w.r.t. $x$ and $z$,
+\begin{equation}
+f_y = \int_{0.5}^{1.5} c \left(x+4y+\frac{41}{6}\right) \mathop{dx} = c \left(4y+\frac{47}{6}\right)
+\end{equation}
+Hence the conditional $f_{X|Y}$ can be evaluated:
+\begin{equation}
+f_{X|Y} = \frac{f(x,y)}{f(y)} = \frac{x+4y+\frac{41}{6}}{4y+\frac{47}{6}}
+\end{equation}
+
+\item Computed values of $E[X\cdot Y]$, $E[X]$, $E[Y]$, $E[X^2]$, $E[Y^2]$, $\sigma_X$, $\sigma_Y$:
+\begin{equation}
+E[X\cdot Y] = \int_0^1 \int_{0.5}^{1.5} x\cdot y\cdot f(x,y) \mathop{dx} \mathop{dy} = \frac{127}{236}
+\end{equation}
+\begin{equation}
+E[X] = c\int_{0.5}^{1.5}x^2+\frac{53x}{6} \mathop{dx} = \frac{119}{118}
+\end{equation}
+\begin{equation}
+E[Y] = c\int_{0}^{1}4y^2+\frac{47y}{6} \mathop{dy} = \frac{63}{118}
+\end{equation}
+\begin{equation}
+E[X^2] = c\int_{0.5}^{1.5}x^3+\frac{53x^2}{6} \mathop{dx} = \frac{779}{708}
+\end{equation}
+\begin{equation}
+E[Y^2] = c\int_{0}^{1}4y^3+\frac{47y^2}{6} \mathop{dy} = \frac{65}{177}
+\end{equation}
+\begin{equation}
+\sigma_X = \sqrt{E[X^2]-(E[X])^2} = 0.2886
+\end{equation}
+\begin{equation}
+\sigma_X = \sqrt{E[Y^2]-(E[Y])^2} = 0.2867
+\end{equation}
+\begin{equation}
+Cov(X,Y) = E[X\cdot Y] - E[X]\cdot E[Y] = -\frac{1}{3481}
+\end{equation}
+\begin{equation}
+\rho_{X,Y} = \frac{Cov(X,Y)}{\sigma_X \cdot \sigma_Y} = -3.47 \times 10^{-3}
+\end{equation}
+\item It is unknown if X and Y are independent, since the covariance or correlation coefficient does not tell us anything about it.
+\item
+\begin{equation}
+f(x,z) = c\int_0^1 x+4y+z^2+0.5 \mathop{dy} = c\left(x+z^2+\frac{5}{2}\right)
+\end{equation}
+The expectation $E[X+2Z]$ is thus:
+\begin{equation}
+c\int_2^3\int_{0.5}^{1.5}\left(x+2\right)\left(x+z^2+\frac{5}{2}\right)\mathop{dx} \mathop{dz}
+\end{equation}
+Evaluating the double integral w.r.t. $x$ and $z$, we obtain,
+\begin{equation}
+E[X+2Z]=\frac{719}{118}
+\end{equation}
+\end{enumerate}
+
+\section{Problem 5: Marginals}
+\begin{enumerate}
+\item The normalizing constant $c$ can be found by equating the following double integral to $1$:
+\begin{equation}
+\int_0^{0.5}\int_0^2cxe^{x^2}\sin\left(2\pi y\right)\mathop{dx}\mathop{dy} = 1
+\end{equation}
+Integrating w.r.t. $x$,
+\begin{equation}
+c\int_0^{0.5}\sin\left(2\pi y\right)\left[\frac{e^{x^2}}{2}\right]_0^2 \mathop{dy} = 1
+\end{equation}
+Integrating w.r.t. $y$,
+\begin{equation}
+c\left(\frac{e^4-1}{2}\right)\left[\frac{-\cos (2\pi y)}{2\pi}\right]_0^\frac{1}{2} = 1
+\end{equation}
+\begin{equation}
+c\left(\frac{e^4-1}{2}\right)\left(\frac{1}{\pi}\right)=1
+\end{equation}
+Solving for $c$,
+\begin{equation}
+c=\frac{2\pi}{e^4-1}
+\end{equation}
+
+\item The marginal $f_y(y)$ is the integral of the joint w.r.t $x$.
+\begin{equation}
+f_y(y)=\int_0^2 f(x,y)\mathop{dx} = c\sin(2\pi y)\int_0^2 xe^{x^2} \mathop{dx}
+\end{equation}
+Evaluating the integral,
+\begin{equation}
+f_y(y)=c\sin(2\pi y)\frac{e^4-1}{2}
+\end{equation}
+Substituting the value of $c$ found in Part 1,
+\begin{equation}
+f_y(y)=\pi\sin(2\pi y)
+\end{equation}
+\end{enumerate}
+
+
+\section{Problem 6: Expectations}
+\begin{enumerate}
+\item The expectation $E[e^{x^3}]$  is the value of
+\begin{equation}
+\int_0^2e^{x^3}\cdot f_x\left(x\right)\mathop{dx}
+\end{equation}
+The marginal $f_x(x)$ is equal to
+\begin{equation}
+c\int_0^{0.25}x^2e^{3x^3}\sin(2\pi y)\mathop{dy}
+\end{equation}
+\begin{equation}
+= \frac{c}{2\pi}x^2e^{3x^3}
+\end{equation}
+Evaluating the integral w.r.t. $x$,
+\begin{equation}
+\int_0^2e^{x^3}\frac{c}{2\pi}x^2e^{3x^3}\mathop{dx}
+\end{equation}
+\begin{equation}
+= \frac{c}{24\pi}(e^32-1)
+\end{equation}
+To solve for $c$, equate the double integral of $f(x,y)$ to 1:
+\begin{equation}
+c\int_0^{0.25}\int_0^2x^2e^{3x^3}\sin\left(2\pi y\right)\mathop{dx}\mathop{dy}\ =\ 1
+\end{equation}
+Evaluating the integral w.r.t $x$,
+\begin{equation}
+c\int_0^{0.25}\left[\frac{e^{3x^3}}{9}\right]_0^2\ \sin\left(2\pi y\right)\mathop{dy}\ =\ 1
+\end{equation}
+Evaluating the integral w.r.t. $y$,
+\begin{equation}
+c\left(\frac{e^{24}-1}{9}\right)\left[\frac{1}{2\pi}\right]
+\end{equation}
+Solving for $c$,
+\begin{equation}
+c=\frac{18\pi}{e^{24}-1}
+\end{equation}
+Substituting $c$ to obtain $E[e^{x^3}]$,
+\begin{equation}
+E[e^{x^3}]=\frac{18\pi}{e^{24}-1}\left(e^{32}-1\cdot\frac{1}{24\pi}\right)
+= \frac{3(e^{32}-1)}{4(e^{24}-1)}
+\end{equation}
+
+\item The expectation $E[Y]$  is the value of
+\begin{equation}
+\int_0^{0.25}\int_0^2x^2e^{3x^3}y\sin\left(2\pi y\right)\mathop{dx}\mathop{dy}
+\end{equation}
+Substituting the integral w.r.t. $x$ from previous parts,
+\begin{equation}
+c\left(\frac{e^{24}-1}{9}\right)\int_0^{0.25}y\sin\left(2\pi y\right)\mathop{dy}
+\end{equation}
+Evaluating the integral by parts w.r.t. $y$,
+\begin{equation}
+\left[c\left(\frac{e^{24}-1}{9}\right)\left[\frac{-y\cos\left(2\pi y\right)}{2\pi}\right]_0^{0.25} -\int_0^{0.25}\frac{-\cos\left(2\pi y\right)}{2\pi}\mathop{dy}\right]
+\end{equation}
+Simplifying,
+\begin{equation}
+c\left(\frac{e^{24}-1}{9}\right)\left[\frac{\sin\left(2\pi y\right)}{4\pi^2}-\frac{y\cos\left(2\pi y\right)}{2\pi}\right]_0^{0.25}
+\end{equation}
+\begin{equation}
+=c\left(\frac{e^{24}-1}{9}\right)\left(\frac{1}{4\pi^2}\right)
+\end{equation}
+Substituting $c$,
+\begin{equation}
+E[Y]=\frac{18\pi}{e^{24}-1}\left(\frac{e^{24}-1}{9}\right)\left(\frac{1}{4\pi^2}\right)=\frac{1}{2\pi}
+\end{equation}
+\end{enumerate}
+\end{document}
